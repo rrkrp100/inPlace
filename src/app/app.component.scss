@@ -1,0 +1,48 @@
+
+$primary: rgb(231, 228, 235);
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    background: $primary;
+    padding: 1em 0;
+    margin: 4px 8px;
+    box-shadow: 3px 6px 7px -3px #ccc;
+    -webkit-box-shadow: 3px 6px 7px -3px #ccc;
+    
+    
+    a {
+        color: rgb(17, 16, 16);
+        text-decoration: none;
+    }
+    a.logo {
+        font-weight: bold;
+    }
+
+    nav {
+        float: right;
+        ul {
+            list-style-type: none;
+            margin: 0;
+            display: flex;
+
+            li a {
+                padding: 1em;
+
+                &:hover {
+                    color: rgba(0, 0, 0, 0.685);
+                    font-weight:600;
+                    border-radius: 4px;
+                    background: darken($primary, 10%);
+                }
+            }
+        }
+    }
+}
+
+h1 {
+    margin-top: 2em;
+}

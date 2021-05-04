@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "inPlace"
+  "defaultProject": "inPlace",
+  "cli": {
+    "analytics": "9f8d3ea6-c8cc-4d4e-986d-b43bfb9e949e"
+  }
 }

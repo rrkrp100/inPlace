@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormatJsonComponent } from './format-json/format-json.component';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FormatJsonComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule,

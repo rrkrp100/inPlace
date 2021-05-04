@@ -1,0 +1,11 @@
+<div class="format-container">
+  <div class="textbox-left">
+    <textarea class="json-textarea" id="jsonInput" placeholder="Raw Json.." #inputBox></textarea>
+  </div>
+  <div>
+    <button class="formatbtn" (click)="formatJson(inputBox.value)"><span>Format</span></button>
+  </div>
+  <div class="textbox-right">
+    <textarea class="json-textarea" [value]=prettyJson readonly id="jsonOutput" placeholder="Output" #outputbox></textarea>
+  </div>
+</div>
