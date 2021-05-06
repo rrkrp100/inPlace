@@ -4,7 +4,8 @@ import {FormatJsonComponent} from './format-json/format-json.component';
 import {NotesComponent} from './notes/notes.component';
 const routes: Routes = [
   { path: 'format', component: FormatJsonComponent },              
-  { path: 'notes', component: NotesComponent }
+  { path: 'notes', component: NotesComponent },
+  { path: '', component: FormatJsonComponent }
 ];
 
 @NgModule({

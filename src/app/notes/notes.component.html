@@ -1,1 +1,11 @@
-<p>notes works!</p>
+<div class="notes-container">
+    <div class="notebox" >
+      <textarea class="json-textarea" #textbox (input)="saveText(textbox.value)" [value]="savedText" placeholder="Whats On Your Mind..?"></textarea>
+    </div>
+    <div class="image-container">
+        <ng-template ngFor let-imageUrl [ngForOf]="imageUrls" let-i="index" >
+            <img [src]="imageUrl" class="image" width=100%/>
+            <button class="deletebtn" (click)="deleteImage(i)" ><span>Delete</span></button>
+        </ng-template>
+    </div>
+</div>
