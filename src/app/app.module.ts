@@ -7,16 +7,23 @@ import { FormatJsonComponent } from './format-json/format-json.component';
 import { NotesComponent } from './notes/notes.component';
 import { FormsModule } from '@angular/forms';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
+import { PokerComponent } from './poker/poker.component';
 @NgModule({
   declarations: [
     AppComponent,
     FormatJsonComponent,
-    NotesComponent
+    NotesComponent,
+    PokerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

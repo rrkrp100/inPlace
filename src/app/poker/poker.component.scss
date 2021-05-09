@@ -1,0 +1,77 @@
+.container {
+  font-size: 16px;
+  font-family: "Nunito", "sans-serif";
+  margin-top: 36px;
+  padding-top: 36px;
+  display: flex;
+  min-height: 720px;
+  flex-direction: column;
+  align-content: center;
+  .no-room {
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    top: 25%;
+    .new-room {top: 25%;
+      align-self: center;
+      display: flex;
+      position: relative;
+    }
+    .or {
+      align-self: center;
+      position: relative;
+    }
+    .have-key {
+      align-self: center;
+      position: relative;
+      display: flex;
+      input {
+        margin: 0px 8px;
+        height: 20px;
+      }
+    }
+  }
+  button {
+    position: relative;
+    top: -2px;
+    background-color: #300b6438;
+    border-radius: 4px;
+    border: 1px double #d12e2e44;
+    color: #5b3d86c5;
+    text-align: center;
+    font-size: 14px;
+    padding: 4px 8px;
+    transition: all 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #522b88c5;
+      color: white;
+    }
+    span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    span:after {
+      content: "\00bb";
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    &:hover span {
+      padding-right: 25px;
+    }
+    &:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+  }
+
+  .room {
+    align-self: center;
+  }
+}
