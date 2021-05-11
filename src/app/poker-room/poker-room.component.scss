@@ -1,0 +1,58 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    h1{
+        position: relative;
+    }
+    .story{
+        border-radius: 8px;
+        border: 4px double #9797c3fa;
+        margin-bottom: 24px;
+        outline: none;
+        .story-text{
+            box-sizing: border-box;
+            //border:none;
+            font-family: dejavu sans mono,droid sans mono,consolas,monaco,lucida console,courier new,courier,monospace,sans-serif;
+            resize: none;
+            height: 100%;
+            width: 100%;
+            padding: 16px;
+            padding-left: 32px;
+            color: #000000;
+            font-size: 32px;
+        }
+    }
+    .card-container{
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+    
+    }
+    .card{
+        position: relative;
+        margin:16px;
+        padding:16px;
+        box-sizing: border-box;
+        max-width: 140px;
+        flex: 100%;
+        text-align: center;
+        font-family: dejavu sans mono,droid sans mono,consolas,monaco,lucida console,courier new,courier,monospace,sans-serif;
+        border-radius: 8px;
+        border: 4px double #6b3632a4;
+        background-color: rgba(255, 0, 0, 0.383);
+        color: #000000;
+        outline: none;
+        .point{
+            font-size: 36px;
+        }
+        .name{
+            font-size: 24px;
+        }
+    }
+    .has-voted{
+        border: 4px double #0c4b0aed;
+        background-color: rgba(109, 248, 116, 0.383);
+    }
+}

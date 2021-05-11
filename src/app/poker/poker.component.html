@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="no-room" *ngIf="!isRoomReady">
+    <div class="have-key">
+      Already have a key? Join the room:
+      <input type="text" #keyInput />
+      <button type="submit" (click)="joinRoom(keyInput.value)">Join</button>
+    </div>
+    <div class="or"><p>---Or---</p></div>
+    <div class="new-room">
+      <button type="button" (click)="createSession()"><span>Create a new Room</span></button>
+    </div>
+  </div>
+  <div class="room" *ngIf="isRoomReady">
+    <app-poker-room [sessionId]="sessionId" [sessionDocument]="sessionDocument"></app-poker-room>
+  </div>
+</div>
