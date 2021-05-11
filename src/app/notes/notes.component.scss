@@ -20,6 +20,7 @@
     padding: 16px;
     padding-left: 32px;
     outline: none;
+    box-sizing: border-box;
     &:focus {
       border: 5px double darken(#9797c3fa, 20%);
     }

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="no-room">
+  <div class="no-room" *ngIf="!isRoomReady">
     <div class="have-key">
       Already have a key? Join the room:
       <input type="text" #keyInput />
@@ -7,33 +7,10 @@
     </div>
     <div class="or"><p>---Or---</p></div>
     <div class="new-room">
-      <button type="button"><span>Create a new Room</span></button>
+      <button type="button" (click)="createSession()"><span>Create a new Room</span></button>
     </div>
   </div>
   <div class="room" *ngIf="isRoomReady">
-    <table>
-      <thead>
-        <th>Name</th>
-        <th>Has Voted</th>
-        <th>Point</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.name }}</td>
-          <td>{{ user.hasVoted }}</td>
-          <td>{{ user.point }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <input type="text" placeholder="Name" #name />
-    <button type="submit" (click)="addUser(name.value)">Add User</button>
-    <input type="number" placeholder="Story Points" #points />
-    <button type="submit" (click)="submit(name.value, points.value)">
-      Submit Points
-    </button>
-    <br />
-    <button type="submit" (click)="createSession()">Create Session</button>
-    <label>{{ sessionId }}</label>
+    <app-poker-room [sessionId]="sessionId" [sessionDocument]="sessionDocument"></app-poker-room>
   </div>
 </div>

@@ -11,12 +11,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { PokerComponent } from './poker/poker.component';
+import { PokerRoomComponent } from './poker-room/poker-room.component';
 @NgModule({
   declarations: [
     AppComponent,
     FormatJsonComponent,
     NotesComponent,
-    PokerComponent
+    PokerComponent,
+    PokerRoomComponent
   ],
   imports: [
     BrowserModule,

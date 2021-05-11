@@ -1,0 +1,41 @@
+<div class="container">
+    <h1>Planning Tool</h1>
+  <div class="story">
+      <textarea class="story-text"></textarea>
+  </div>
+  <div class="card-container">
+    <div
+      class="card"
+      *ngFor="let user of users"
+      [ngClass]="user.hasVoted ? 'has-voted' : ''"
+    >
+      <p class="name">{{ user.name }}</p>
+      <p *ngIf="showPoints" class="point">{{ user.point }}</p>
+    </div>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Has Voted</th>
+        <th>Point</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.hasVoted }}</td>
+          <td>{{ user.point }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <input type="text" placeholder="Name" #name />
+    <button type="submit" (click)="addUser(name.value)">Add User</button>
+    <input type="number" placeholder="Story Points" #points />
+    <button type="submit" (click)="submit(name.value, points.value)">
+      Submit Points
+    </button>
+    <br />
+    <label>{{ sessionId }}</label>
+  </div>
+</div>

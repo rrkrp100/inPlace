@@ -11,8 +11,15 @@
     position: relative;
     flex-direction: column;
     display: flex;
-    top: 25%;
-    .new-room {top: 25%;
+    top: 150px;
+    border: 1px double #0f0a0a44;
+    width: 50%;
+    align-self: center;
+    padding: 8% 0;
+    background-color: rgba(162, 158, 167, 0.034);
+    box-shadow: 3px 6px 7px -3px #ccc;
+
+    .new-room {
       align-self: center;
       display: flex;
       position: relative;
@@ -71,7 +78,4 @@
     }
   }
 
-  .room {
-    align-self: center;
-  }
 }
