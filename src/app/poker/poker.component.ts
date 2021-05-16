@@ -13,44 +13,55 @@ import { Poker, User } from '../interafces/poker';
 })
 export class PokerComponent implements OnInit {
   sessionId: string = '';
-  isRoomReady=false;
+  isRoomReady = false;
   users: User[] = [];
-  sessionDocument: AngularFirestoreDocument<Poker>={} as AngularFirestoreDocument<Poker>;
+  sessionDocument: AngularFirestoreDocument<Poker> =
+    {} as AngularFirestoreDocument<Poker>;
 
   constructor(
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const pokerKey = localStorage.getItem('pokerKey');
+    if (pokerKey && pokerKey.length>0) {
+      this.isRoomReady = true;
+      this.sessionId=pokerKey;
+      this.cd.detectChanges();
+    }
+  }
 
   joinRoom(key: string) {
     if (key.trim().length > 0) {
       this.sessionId = key.trim();
       const documentId = 'poker/' + this.sessionId;
       this.sessionDocument = this.firestore.doc<Poker>(documentId);
-      const subs = this.sessionDocument.valueChanges().subscribe((data) => {
-        if (data) {
-          this.users = data.users;
-          subs.unsubscribe();
-          this.isRoomReady=true;
-          this.cd.detectChanges();
-          
-        }else{
+      const subs = this.sessionDocument.valueChanges().subscribe(
+        (data) => {
+          if (data) {
+            this.users = data.users;
+            subs.unsubscribe();
+            this.isRoomReady = true;
+            localStorage.setItem('pokerKey', this.sessionId);
+            this.cd.detectChanges();
+          } else {
+            alert('Please Check the Room Key');
+            this.isRoomReady = false;
+          }
+        },
+        (error) => {
           alert('Please Check the Room Key');
-          this.isRoomReady=false;
+          this.isRoomReady = false;
         }
-      },
-      (error)=>{
-        alert('Please Check the Room Key');
-        this.isRoomReady=false;
-      });
-    }else{
+      );
+    } else {
       alert('Please Check the Room Key');
-      this.isRoomReady=false;
+      this.isRoomReady = false;
     }
   }
-
 
   createSession() {
     const defaultUser: User = { name: 'default', hasVoted: false, point: 0 };
@@ -60,7 +71,8 @@ export class PokerComponent implements OnInit {
       .add(newPoker)
       .then((ref) => {
         this.sessionId = ref.id;
-        this.isRoomReady=true;
+        this.isRoomReady = true;
+        localStorage.setItem('pokerKey', this.sessionId);
       });
   }
 }

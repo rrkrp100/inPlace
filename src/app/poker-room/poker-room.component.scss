@@ -5,7 +5,12 @@
   position: relative;
   min-height: calc(100vh - 65px);
   height: 100%;
-  
+  .heading{
+    display: flex;
+    h1{
+      flex: 90%;
+    }
+  }
 
   h1 {
     position: relative;
@@ -91,7 +96,7 @@
         color: #696464;
       }
       .isSelected{
-        padding: 72px;
+        padding: 72px 24px;
         background-color: rgba(20, 241, 57, 0.383);
       }
     }
@@ -140,7 +145,14 @@
 .votes-button{
   top: 35%;
 }
-
+.exit{  
+  height: 90%;
+  top: 20px;
+  background-color: rgba(83, 4, 4, 0.486);
+  &:hover {
+    background-color: #9b0606;
+  }
+}
 .actions{
   display: flex;
   margin: 2%;
