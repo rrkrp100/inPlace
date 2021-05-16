@@ -13,7 +13,7 @@ import { Poker, User } from '../interafces/poker';
 })
 export class PokerComponent implements OnInit {
   sessionId: string = '';
-  isRoomReady=true;
+  isRoomReady=false;
   users: User[] = [];
   sessionDocument: AngularFirestoreDocument<Poker>={} as AngularFirestoreDocument<Poker>;
 
