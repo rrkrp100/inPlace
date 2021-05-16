@@ -1,41 +1,42 @@
 <div class="container">
-    <h1>Planning Tool</h1>
+  <div class="heading"><h1>Planning Tool (key:{{ sessionId }})</h1><button class="formatbtn exit" (click)="exitToMainPage()">Exit</button></div>
   <div class="story">
-      <textarea class="story-text"></textarea>
+    <textarea class="story-text" placeholder="Story Description.." #story></textarea>
   </div>
   <div class="card-container">
+    <div>
+      <button class="formatbtn votes-button" (click)="showPoints()">
+        <span>Show Votes</span>
+      </button>
+    </div>
     <div
       class="card"
       *ngFor="let user of users"
       [ngClass]="user.hasVoted ? 'has-voted' : ''"
     >
       <p class="name">{{ user.name }}</p>
-      <p *ngIf="showPoints" class="point">{{ user.point }}</p>
+      <p *ngIf="displayPoints" class="point">{{ user.point }}</p>
     </div>
   </div>
-  <div>
-    <table>
-      <thead>
-        <th>Name</th>
-        <th>Has Voted</th>
-        <th>Point</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.name }}</td>
-          <td>{{ user.hasVoted }}</td>
-          <td>{{ user.point }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <input type="text" placeholder="Name" #name />
-    <button type="submit" (click)="addUser(name.value)">Add User</button>
-    <input type="number" placeholder="Story Points" #points />
-    <button type="submit" (click)="submit(name.value, points.value)">
-      Submit Points
-    </button>
-    <br />
-    <label>{{ sessionId }}</label>
+  <div class="voting-section">
+    <div class="actions">
+      <span>
+        <input type="text" placeholder="Enter name to enable voting" #name />
+        <button type="submit" class="formatbtn add-user" (click)="addUser(name.value)">Add User</button>
+      </span>
+      <span>
+        <button type="submit" class="formatbtn" (click)="nextStory()"> <span>Next Story</span></button>
+      </span>
+    </div>
+    <div class="point-container">
+      <button
+        *ngFor="let point of allowedPoints"
+        (click)="selectPoint(point)"
+        [ngClass]="isSelected(point)"
+        [disabled]="!hasUserDetails"
+      >
+        <p class="name">{{ point }}</p>
+      </button>
+    </div>
   </div>
 </div>
