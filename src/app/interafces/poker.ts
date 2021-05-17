@@ -1,5 +1,6 @@
 export interface Poker {
-    users:User[]
+    story:string;
+    users:User[];
 }
 
 export interface User{
