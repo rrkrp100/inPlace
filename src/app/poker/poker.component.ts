@@ -65,7 +65,7 @@ export class PokerComponent implements OnInit {
 
   createSession() {
     const defaultUser: User = { name: 'default', hasVoted: false, point: 0 };
-    const newPoker: Poker = { users: [] };
+    const newPoker: Poker = {story:'', users: [] };
     this.firestore
       .collection('poker')
       .add(newPoker)

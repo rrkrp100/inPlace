@@ -1,7 +1,17 @@
 <div class="container">
-  <div class="heading"><h1>Planning Tool (key:{{ sessionId }})</h1><button class="formatbtn exit" (click)="exitToMainPage()">Exit</button></div>
+  <div class="heading">
+    <h1>Planning Tool (key: {{ sessionId }} )</h1>
+    <button class="formatbtn exit" (click)="exitToMainPage()">Exit</button>
+  </div>
   <div class="story">
-    <textarea class="story-text" placeholder="Story Description.." #story></textarea>
+    <textarea
+      class="story-text"
+      placeholder="Story Description.."
+      [value]="storyText"
+      #story
+      (change)="updateStory(story.value)"
+      (keypress)="updateStory(story.value)"
+    ></textarea>
   </div>
   <div class="card-container">
     <div>
@@ -21,11 +31,25 @@
   <div class="voting-section">
     <div class="actions">
       <span>
-        <input type="text" placeholder="Enter name to enable voting" #name />
-        <button type="submit" class="formatbtn add-user" (click)="addUser(name.value)">Add User</button>
+        <input
+          type="text"
+          placeholder="Enter name to enable voting"
+          #name
+          [readonly]="hasUserDetails"
+        />
+        <button
+          type="submit"
+          *ngIf="!hasUserDetails"
+          class="formatbtn add-user"
+          (click)="addUser(name.value)"
+        >
+          Add User
+        </button>
       </span>
       <span>
-        <button type="submit" class="formatbtn" (click)="nextStory()"> <span>Next Story</span></button>
+        <button type="submit" class="formatbtn" (click)="nextStory()">
+          <span>Next Story</span>
+        </button>
       </span>
     </div>
     <div class="point-container">
