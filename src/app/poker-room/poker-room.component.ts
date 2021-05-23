@@ -58,6 +58,7 @@ export class PokerRoomComponent implements OnInit {
           if (data) {
             this.storyText = data.story;
             this.users = data.users;
+            this.displayPoints=data.showVotes;
             this.cd.detectChanges();
           } else {
             alert('Room Closed');
@@ -75,12 +76,12 @@ export class PokerRoomComponent implements OnInit {
     }
   }
 
-  submit(name: string, points: number) {
+  updatePoints(name: string, points: number) {
     const user = this.users.find((x) => x.name === name);
     if (user) {
       user.point = points;
       user.hasVoted = true;
-      const newPoker: Poker = { story: this.storyText, users: this.users };
+      const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
       this.sessionDocument.update(newPoker);
     }
   }
@@ -97,7 +98,7 @@ export class PokerRoomComponent implements OnInit {
 
     const newUser: User = { name, hasVoted: false, point: 0 };
     this.users.push(newUser);
-    const newPoker: Poker = { story: this.storyText, users: this.users };
+    const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
     this.sessionDocument.update(newPoker);
     this.userName = name;
     this.hasUserDetails = true;
@@ -105,6 +106,8 @@ export class PokerRoomComponent implements OnInit {
   }
   showPoints() {
     this.displayPoints = true;
+    const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
+    this.sessionDocument.update(newPoker);
   }
   selectPoint(point: number) {
     if (this.displayPoints) {
@@ -112,7 +115,7 @@ export class PokerRoomComponent implements OnInit {
       return;
     }
     this.selectedPoint = point;
-    this.submit(this.userName, this.selectedPoint);
+    this.updatePoints(this.userName, this.selectedPoint);
     this.cd.detectChanges();
   }
   isSelected(point: number) {
@@ -142,7 +145,7 @@ export class PokerRoomComponent implements OnInit {
     });
     this.selectedPoint = -1;
     this.storyText = '';
-    const newPoker: Poker = { story: this.storyText, users: this.users };
+    const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:false };
     this.sessionDocument.update(newPoker);
   }
 
@@ -152,7 +155,7 @@ export class PokerRoomComponent implements OnInit {
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      const newPoker: Poker = { story: this.storyText, users: this.users };
+      const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
       this.sessionDocument.update(newPoker);
       console.log(this.storyText);
     }, 1000);

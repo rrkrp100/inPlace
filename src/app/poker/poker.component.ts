@@ -1,10 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/firestore';
-import { error } from 'selenium-webdriver';
 import { Poker, User } from '../interafces/poker';
+import { PokerService } from '../services/poker.service';
 
 @Component({
   selector: 'app-poker',
@@ -15,64 +11,41 @@ export class PokerComponent implements OnInit {
   sessionId: string = '';
   isRoomReady = false;
   users: User[] = [];
-  sessionDocument: AngularFirestoreDocument<Poker> =
-    {} as AngularFirestoreDocument<Poker>;
 
   constructor(
-    private firestore: AngularFirestore,
+    private pokerStore: PokerService,
     private cd: ChangeDetectorRef
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit(): void {
     const pokerKey = localStorage.getItem('pokerKey');
-    if (pokerKey && pokerKey.length>0) {
-      this.isRoomReady = true;
-      this.sessionId=pokerKey;
-      this.cd.detectChanges();
+    if (pokerKey && pokerKey.length > 0) {
+     this.joinRoom(pokerKey);
     }
   }
 
   joinRoom(key: string) {
     if (key.trim().length > 0) {
       this.sessionId = key.trim();
-      const documentId = 'poker/' + this.sessionId;
-      this.sessionDocument = this.firestore.doc<Poker>(documentId);
-      const subs = this.sessionDocument.valueChanges().subscribe(
-        (data) => {
-          if (data) {
-            this.users = data.users;
-            subs.unsubscribe();
-            this.isRoomReady = true;
-            localStorage.setItem('pokerKey', this.sessionId);
-            this.cd.detectChanges();
-          } else {
-            alert('Please Check the Room Key');
-            this.isRoomReady = false;
-          }
-        },
-        (error) => {
-          alert('Please Check the Room Key');
-          this.isRoomReady = false;
+      this.pokerStore.joinRoom(this.sessionId).subscribe((joined)=>{
+        if(joined){
+          localStorage.setItem('pokerKey', this.sessionId);
+          this.isRoomReady=true;
+          this.cd.detectChanges();
         }
-      );
-    } else {
-      alert('Please Check the Room Key');
-      this.isRoomReady = false;
+      },
+      (error)=>{
+        console.log(error);
+      });
     }
   }
 
   createSession() {
-    const defaultUser: User = { name: 'default', hasVoted: false, point: 0 };
-    const newPoker: Poker = {story:'', users: [] };
-    this.firestore
-      .collection('poker')
-      .add(newPoker)
-      .then((ref) => {
-        this.sessionId = ref.id;
-        this.isRoomReady = true;
-        localStorage.setItem('pokerKey', this.sessionId);
-      });
+    const newPoker: Poker = { story: '', users: [], showVotes: false };
+    this.pokerStore.createSession(newPoker).then((ref) => {
+      this.sessionId = ref.id;
+      this.isRoomReady = true;
+      localStorage.setItem('pokerKey', this.sessionId);
+    });
   }
 }

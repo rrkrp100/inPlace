@@ -1,11 +1,47 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireDatabase } from '@angular/fire/database';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/firestore';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Poker } from '../interafces/poker';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PokerService {
+  private sessionDocument: AngularFirestoreDocument<Poker> =
+    {} as AngularFirestoreDocument<Poker>;
 
-constructor() { }
+  pokerRoom = new BehaviorSubject<Poker>({
+    story: '',
+    users: [],
+    showVotes: false,
+  });
 
+  constructor(private firestore: AngularFirestore) {}
+
+  joinRoom(sessionId: string): Observable<boolean>{
+    const documentId = 'poker/' + sessionId;
+    return new Observable(() => {
+      this.sessionDocument = this.firestore.doc<Poker>(documentId);
+      this.sessionDocument.valueChanges().subscribe(
+        (roomData) => {
+          if (roomData) {
+            this.pokerRoom.next(roomData);
+            return true;
+          } else {
+            return false;
+          }
+        },
+        (error) => {
+          console.log(error);
+          return false;
+        }
+      );
+    });
+  }
+
+  createSession(pokerRoom: Poker): Promise<any> {
+    return this.firestore.collection('poker').add(pokerRoom);
+  }
 }

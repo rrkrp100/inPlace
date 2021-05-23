@@ -12,6 +12,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { PokerComponent } from './poker/poker.component';
 import { PokerRoomComponent } from './poker-room/poker-room.component';
+import { PokerService } from './services/poker.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,7 @@ import { PokerRoomComponent } from './poker-room/poker-room.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [PokerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
