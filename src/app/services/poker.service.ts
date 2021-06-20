@@ -20,17 +20,17 @@ export class PokerService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  joinRoom(sessionId: string): Observable<boolean>{
+  joinRoom(sessionId: string): Observable<boolean> {
     const documentId = 'poker/' + sessionId;
-    return new Observable(() => {
+    return new Observable((observer) => {
       this.sessionDocument = this.firestore.doc<Poker>(documentId);
       this.sessionDocument.valueChanges().subscribe(
         (roomData) => {
           if (roomData) {
             this.pokerRoom.next(roomData);
-            return true;
+            observer.next(true);
           } else {
-            return false;
+            observer.next(false);
           }
         },
         (error) => {
@@ -43,5 +43,9 @@ export class PokerService {
 
   createSession(pokerRoom: Poker): Promise<any> {
     return this.firestore.collection('poker').add(pokerRoom);
+  }
+
+  updateRoom(newRoom: Poker) {
+    this.sessionDocument.update(newRoom);
   }
 }

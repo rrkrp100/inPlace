@@ -12,6 +12,7 @@ import {
 } from '@angular/fire/firestore';
 import { error } from 'selenium-webdriver';
 import { Poker, User } from '../interafces/poker';
+import { PokerService } from '../services/poker.service';
 @Component({
   selector: 'app-poker-room',
   templateUrl: './poker-room.component.html',
@@ -34,7 +35,8 @@ export class PokerRoomComponent implements OnInit {
   timer: any;
   constructor(
     private firestore: AngularFirestore,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private pokerService: PokerService
   ) {}
 
   ngOnInit(): void {
@@ -50,15 +52,12 @@ export class PokerRoomComponent implements OnInit {
       }
     }
     try {
-      // this.sessionId = '1234';
-      const documentId = 'poker/' + this.sessionId;
-      this.sessionDocument = this.firestore.doc<Poker>(documentId);
-      this.sessionDocument.valueChanges().subscribe(
+      this.pokerService.pokerRoom.subscribe(
         (data) => {
           if (data) {
             this.storyText = data.story;
             this.users = data.users;
-            this.displayPoints=data.showVotes;
+            this.displayPoints = data.showVotes;
             this.cd.detectChanges();
           } else {
             alert('Room Closed');
@@ -70,6 +69,25 @@ export class PokerRoomComponent implements OnInit {
           this.exitToMainPage();
         }
       );
+      // const documentId = 'poker/' + this.sessionId;
+      // this.sessionDocument = this.firestore.doc<Poker>(documentId);
+      // this.sessionDocument.valueChanges().subscribe(
+      //   (data) => {
+      //     if (data) {
+      //       this.storyText = data.story;
+      //       this.users = data.users;
+      //       this.displayPoints=data.showVotes;
+      //       this.cd.detectChanges();
+      //     } else {
+      //       alert('Room Closed');
+      //       this.exitToMainPage();
+      //     }
+      //   },
+      //   (eeror) => {
+      //     alert('Room Closed');
+      //     this.exitToMainPage();
+      //   }
+      // );
     } catch (error) {
       alert('Room Closed');
       this.exitToMainPage();
@@ -81,8 +99,12 @@ export class PokerRoomComponent implements OnInit {
     if (user) {
       user.point = points;
       user.hasVoted = true;
-      const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
-      this.sessionDocument.update(newPoker);
+      const newPoker: Poker = {
+        story: this.storyText,
+        users: this.users,
+        showVotes: this.displayPoints,
+      };
+      this.pokerService.updateRoom(newPoker);
     }
   }
   addUser(receivedName: string) {
@@ -98,16 +120,24 @@ export class PokerRoomComponent implements OnInit {
 
     const newUser: User = { name, hasVoted: false, point: 0 };
     this.users.push(newUser);
-    const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
-    this.sessionDocument.update(newPoker);
+    const newPoker: Poker = {
+      story: this.storyText,
+      users: this.users,
+      showVotes: this.displayPoints,
+    };
+    this.pokerService.updateRoom(newPoker);
     this.userName = name;
     this.hasUserDetails = true;
     localStorage.setItem('userName', this.userName);
   }
   showPoints() {
     this.displayPoints = true;
-    const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
-    this.sessionDocument.update(newPoker);
+    const newPoker: Poker = {
+      story: this.storyText,
+      users: this.users,
+      showVotes: this.displayPoints,
+    };
+    this.pokerService.updateRoom(newPoker);
   }
   selectPoint(point: number) {
     if (this.displayPoints) {
@@ -132,10 +162,11 @@ export class PokerRoomComponent implements OnInit {
     this.firestore
       .doc('poker/' + this.sessionId)
       .delete()
-      .then();
-    localStorage.removeItem('pokerKey');
-    localStorage.removeItem('userName');
-    location.reload();
+      .then(() => {
+        localStorage.removeItem('pokerKey');
+        localStorage.removeItem('userName');
+        location.reload();
+      });
   }
   nextStory() {
     this.displayPoints = false;
@@ -145,8 +176,12 @@ export class PokerRoomComponent implements OnInit {
     });
     this.selectedPoint = -1;
     this.storyText = '';
-    const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:false };
-    this.sessionDocument.update(newPoker);
+    const newPoker: Poker = {
+      story: this.storyText,
+      users: this.users,
+      showVotes: false,
+    };
+    this.pokerService.updateRoom(newPoker);
   }
 
   updateStory(value: string) {
@@ -155,9 +190,12 @@ export class PokerRoomComponent implements OnInit {
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      const newPoker: Poker = { story: this.storyText, users: this.users, showVotes:this.displayPoints };
-      this.sessionDocument.update(newPoker);
-      console.log(this.storyText);
+      const newPoker: Poker = {
+        story: this.storyText,
+        users: this.users,
+        showVotes: this.displayPoints,
+      };
+      this.pokerService.updateRoom(newPoker);
     }, 1000);
   }
 }
