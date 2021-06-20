@@ -45,10 +45,7 @@ export class PokerComponent implements OnInit {
   createSession() {
     const newPoker: Poker = { story: '', users: [], showVotes: false };
     this.pokerStore.createSession(newPoker).then((ref) => {
-      this.sessionId = ref.id;
-      this.isRoomReady = true;
-      this.pokerStore.setSessionDoc(this.sessionId);
-      localStorage.setItem('pokerKey', this.sessionId);
+      this.joinRoom(ref.id);
     });
   }
 }

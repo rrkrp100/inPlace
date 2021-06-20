@@ -27,14 +27,7 @@ export class PokerService {
     const documentId = 'poker/' + sessionId;
     return new Observable((observer) => {
       this.sessionDocument = this.firestore.doc<Poker>(documentId);
-      // this.snapshots = this.sessionDocument
-      //   .snapshotChanges()
-      //   .subscribe((change) => {
-      //     const type = change.type;
-      //     if (type === 'removed') {
-      //       this.deleteDocAndExit();
-      //     }
-      //   });
+
       this.sessionDocument.snapshotChanges().subscribe(
         (data) => {
           if (data.type === 'removed') {
@@ -63,20 +56,6 @@ export class PokerService {
   updateRoom(newRoom: Poker) {
     this.sessionDocument.update(newRoom);
   }
-
-  setSessionDoc(sessionId: string) {
-    const documentId = 'poker/' + sessionId;
-    this.sessionDocument = this.firestore.doc<Poker>(documentId);
-    this.snapshots = this.sessionDocument
-      .snapshotChanges()
-      .subscribe((change) => {
-        const type = change.type;
-        if (type === 'removed') {
-          this.deleteDocAndExit();
-        }
-      });
-  }
-
   deleteDocAndExit() {
     this.sessionDocument.delete().then(() => {
       localStorage.removeItem('pokerKey');
