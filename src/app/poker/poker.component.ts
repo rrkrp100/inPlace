@@ -20,32 +20,32 @@ export class PokerComponent implements OnInit {
   ngOnInit(): void {
     const pokerKey = localStorage.getItem('pokerKey');
     if (pokerKey && pokerKey.length > 0) {
-     this.joinRoom(pokerKey);
+      this.joinRoom(pokerKey);
     }
   }
 
   joinRoom(key: string) {
     if (key.trim().length > 0) {
       this.sessionId = key.trim();
-      this.pokerStore.joinRoom(this.sessionId).subscribe((joined)=>{
-        if(joined){
-          localStorage.setItem('pokerKey', this.sessionId);
-          this.isRoomReady=true;
-          this.cd.detectChanges();
+      this.pokerStore.joinRoom(this.sessionId).subscribe(
+        (joined) => {
+          if (joined) {
+            localStorage.setItem('pokerKey', this.sessionId);
+            this.isRoomReady = true;
+            this.cd.detectChanges();
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-      },
-      (error)=>{
-        console.log(error);
-      });
+      );
     }
   }
 
   createSession() {
     const newPoker: Poker = { story: '', users: [], showVotes: false };
     this.pokerStore.createSession(newPoker).then((ref) => {
-      this.sessionId = ref.id;
-      this.isRoomReady = true;
-      localStorage.setItem('pokerKey', this.sessionId);
+      this.joinRoom(ref.id);
     });
   }
 }

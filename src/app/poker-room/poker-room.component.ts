@@ -69,25 +69,6 @@ export class PokerRoomComponent implements OnInit {
           this.exitToMainPage();
         }
       );
-      // const documentId = 'poker/' + this.sessionId;
-      // this.sessionDocument = this.firestore.doc<Poker>(documentId);
-      // this.sessionDocument.valueChanges().subscribe(
-      //   (data) => {
-      //     if (data) {
-      //       this.storyText = data.story;
-      //       this.users = data.users;
-      //       this.displayPoints=data.showVotes;
-      //       this.cd.detectChanges();
-      //     } else {
-      //       alert('Room Closed');
-      //       this.exitToMainPage();
-      //     }
-      //   },
-      //   (eeror) => {
-      //     alert('Room Closed');
-      //     this.exitToMainPage();
-      //   }
-      // );
     } catch (error) {
       alert('Room Closed');
       this.exitToMainPage();
@@ -159,14 +140,7 @@ export class PokerRoomComponent implements OnInit {
     }
   }
   exitToMainPage() {
-    this.firestore
-      .doc('poker/' + this.sessionId)
-      .delete()
-      .then(() => {
-        localStorage.removeItem('pokerKey');
-        localStorage.removeItem('userName');
-        location.reload();
-      });
+    this.pokerService.deleteDocAndExit();
   }
   nextStory() {
     this.displayPoints = false;
