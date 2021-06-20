@@ -5,21 +5,26 @@ import {
   DocumentSnapshot,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Poker } from '../interafces/poker';
+import { Poker, User } from '../interafces/poker';
 @Injectable({
   providedIn: 'root',
 })
 export class PokerService {
+  private usersData: any;
   private sessionDocument: AngularFirestoreDocument<Poker> =
     {} as AngularFirestoreDocument<Poker>;
+  private snapshots: any;
+  private roomState: Poker = {
+    story: '',
+    users: [],
+    showVotes: false,
+  };
 
   pokerRoom = new BehaviorSubject<Poker>({
     story: '',
     users: [],
     showVotes: false,
   });
-
-  private snapshots: any;
 
   constructor(private firestore: AngularFirestore) {}
 
@@ -35,7 +40,9 @@ export class PokerService {
           }
           const roomData = data.payload.data();
           if (roomData) {
-            this.pokerRoom.next(roomData);
+            this.roomState.showVotes = roomData.showVotes;
+            this.roomState.story = roomData.story;
+            this.pokerRoom.next(this.roomState);
             observer.next(true);
           } else {
             observer.next(false);
@@ -46,21 +53,71 @@ export class PokerService {
           return false;
         }
       );
+
+      this.sessionDocument
+        .collection('users', (ref) => ref.where('name', '!=', 'default'))
+        .valueChanges()
+        .subscribe((docs) => {
+          const userArray: User[] = [];
+          docs.forEach((doc) => {
+            userArray.push({
+              name: doc.name,
+              hasVoted: doc.hasVoted,
+              point: doc.point,
+            });
+          });
+          this.roomState.users = userArray;
+          this.pokerRoom.next(this.roomState);
+        });
     });
   }
 
-  createSession(pokerRoom: Poker): Promise<any> {
-    return this.firestore.collection('poker').add(pokerRoom);
+  createSession(pokerRoom: Poker): Observable<any> {
+    return new Observable((observer) => {
+      this.firestore
+        .collection('poker')
+        .add(pokerRoom)
+        .then((document) => {
+          this.sessionDocument = this.firestore.doc<Poker>(
+            'poker/' + document.id
+          );
+          const user: User = {
+            name: 'default',
+            hasVoted: false,
+            point: 0,
+          };
+          this.sessionDocument
+            .collection('users')
+            .doc<User>('default')
+            .set(user);
+          observer.next(document.id);
+        });
+    });
   }
 
   updateRoom(newRoom: Poker) {
-    this.sessionDocument.update(newRoom);
+    this.sessionDocument.update({
+      story: newRoom.story,
+      showVotes: newRoom.showVotes,
+    });
   }
   deleteDocAndExit() {
     this.sessionDocument.delete().then(() => {
       localStorage.removeItem('pokerKey');
       localStorage.removeItem('userName');
       location.reload();
+    });
+  }
+
+  updateUser(user: User) {
+    this.sessionDocument.collection('users').doc<User>(user.name).set(user);
+  }
+  resetUsers() {
+    this.roomState.users.forEach((user) => {
+      this.sessionDocument
+        .collection('users')
+        .doc<User>(user.name)
+        .update({ hasVoted: false, point: 0 });
     });
   }
 }
