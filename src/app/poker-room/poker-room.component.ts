@@ -159,14 +159,7 @@ export class PokerRoomComponent implements OnInit {
     }
   }
   exitToMainPage() {
-    this.firestore
-      .doc('poker/' + this.sessionId)
-      .delete()
-      .then(() => {
-        localStorage.removeItem('pokerKey');
-        localStorage.removeItem('userName');
-        location.reload();
-      });
+    this.pokerService.deleteDocAndExit();
   }
   nextStory() {
     this.displayPoints = false;
