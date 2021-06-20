@@ -1,6 +1,7 @@
 export interface Poker {
     story:string;
     users:User[];
+    showVotes:boolean;
 }
 
 export interface User{
