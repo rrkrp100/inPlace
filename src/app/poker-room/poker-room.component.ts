@@ -80,12 +80,8 @@ export class PokerRoomComponent implements OnInit {
     if (user) {
       user.point = points;
       user.hasVoted = true;
-      const newPoker: Poker = {
-        story: this.storyText,
-        users: this.users,
-        showVotes: this.displayPoints,
-      };
-      this.pokerService.updateRoom(newPoker);
+      
+      this.pokerService.updateUser(user);
     }
   }
   addUser(receivedName: string) {
@@ -101,12 +97,7 @@ export class PokerRoomComponent implements OnInit {
 
     const newUser: User = { name, hasVoted: false, point: 0 };
     this.users.push(newUser);
-    const newPoker: Poker = {
-      story: this.storyText,
-      users: this.users,
-      showVotes: this.displayPoints,
-    };
-    this.pokerService.updateRoom(newPoker);
+    this.pokerService.updateUser(newUser);
     this.userName = name;
     this.hasUserDetails = true;
     localStorage.setItem('userName', this.userName);
@@ -156,6 +147,7 @@ export class PokerRoomComponent implements OnInit {
       showVotes: false,
     };
     this.pokerService.updateRoom(newPoker);
+    this.pokerService.resetUsers();
   }
 
   updateStory(value: string) {

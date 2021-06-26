@@ -44,8 +44,8 @@ export class PokerComponent implements OnInit {
 
   createSession() {
     const newPoker: Poker = { story: '', users: [], showVotes: false };
-    this.pokerStore.createSession(newPoker).then((ref) => {
-      this.joinRoom(ref.id);
+    this.pokerStore.createSession(newPoker).subscribe((id) => {
+      this.joinRoom(id);
     });
   }
 }
