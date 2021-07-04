@@ -10,9 +10,13 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
-import { error } from 'selenium-webdriver';
 import { Poker, User } from '../interafces/poker';
 import { PokerService } from '../services/poker.service';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { RoomDataComponent } from './room-data/room-data.component';
 @Component({
   selector: 'app-poker-room',
   templateUrl: './poker-room.component.html',
@@ -34,24 +38,28 @@ export class PokerRoomComponent implements OnInit {
   selectedPoint: number = -1;
   storyText = '';
   timer: any;
+  tipDelay=1000;
   constructor(
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef,
-    private pokerService: PokerService
+    private pokerService: PokerService,
+    private _bottomSheet: MatBottomSheet
   ) {
     this.defaultUser = [
       { name: 'Rahul Pandey', hasVoted: false, point: 5 },
       { name: 'Shahista InamDar', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
-      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Ragul', hasVoted: false, point: 5 },
+      { name: 'Saurabh', hasVoted: false, point: 5 },
+      { name: 'Niraj', hasVoted: false, point: 5 },
+      { name: 'Rohan', hasVoted: false, point: 5 },
       
     ];
+  }
+
+  showRoomData() {
+    const bottomSheetRef = this._bottomSheet.open(RoomDataComponent, {
+      ariaLabel: 'Share on social media',
+    });
   }
 
   ngOnInit(): void {

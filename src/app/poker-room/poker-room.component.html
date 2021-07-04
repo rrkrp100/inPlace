@@ -64,11 +64,15 @@
     </div>
   </div>
 </div> -->
-
+<button
+  mat-fab
+  class="room-options-btn"
+  matTooltip="Display Room Info"
+  (click)="showRoomData()"
+>
+  <mat-icon>info</mat-icon>
+</button>
 <div class="poker-room">
-  <div class="room-section">
-    <h1>Number: 1234536789kljhasd</h1>
-  </div>
   <div class="story-section">
     <mat-form-field class="story-input">
       <mat-label>Story:</mat-label>
@@ -82,7 +86,8 @@
     <button mat-raised-button class="next-story-btn">Next Story</button>
   </div>
   <div class="voters-section">
-    <mat-card class="voter-cards" *ngFor="let user of defaultUser">
+    <button mat-raised-button class="show-votes-btn">Show Votes</button>
+    <mat-card  class="voter-cards" *ngFor="let user of defaultUser">
       <mat-card-title class="voter-name">{{ user.name }}</mat-card-title>
       <mat-card-content class="voter-points">{{ user.point }}</mat-card-content>
       <mat-card-actions class="voter-card-actions">
@@ -92,7 +97,7 @@
     </mat-card>
   </div>
   <div class="points-section">
-    <mat-card class="point-cards" *ngFor="let point of allowedPoints">
+    <mat-card matTooltip="Click To Vote" [matTooltipShowDelay]="tipDelay" class="point-cards" *ngFor="let point of allowedPoints">
       <mat-card-content class="point-value">{{ point }}</mat-card-content>
     </mat-card>
   </div>

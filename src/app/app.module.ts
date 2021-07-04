@@ -21,6 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu'
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { RoomDataComponent } from './poker-room/room-data/room-data.component';
+import {MatIconModule} from '@angular/material/icon'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     FormatJsonComponent,
     NotesComponent,
     PokerComponent,
-    PokerRoomComponent
+    PokerRoomComponent,
+    RoomDataComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatInputModule,
     MatCardModule,
     MatMenuModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [PokerService],
   bootstrap: [AppComponent]

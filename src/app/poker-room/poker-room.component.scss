@@ -170,18 +170,18 @@
 //   }
 // }
 
+.room-options-btn {
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  background-color: rgba(63, 63, 100, 0.315);
+  box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
+}
 .poker-room {
   display: flex;
   flex-direction: column;
-  
   width: 100%;
   height: 90%;
-  .room-section{
-    flex: 10%;
-    display: flex;
-    box-shadow: 3px 6px 7px 3px #ccc;
-    padding: 2%;
-  }
   .story-section {
     flex: 20%;
     display: flex;
@@ -212,12 +212,21 @@
     flex-wrap: wrap;
     box-shadow: 3px 6px 7px 3px #ccc;
     padding: 2%;
+    justify-content: center;
+    .show-votes-btn{
+      position: fixed;
+      left: 3%;
+      top: 50%;
+      background-color: rgba(135, 222, 142, 0.349);
+      box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
+    }
     .voter-cards {
       display: flex;
       flex-direction: column;
       margin: 0.5%;
-      background-color: rgba(243, 189, 187, 0.472);
+      background-color: rgba(174, 156, 233, 0.397);
       max-height: 50%;
+      align-self: center;
       .voter-name {
         flex: 10%;
         align-self: center;
@@ -250,7 +259,7 @@
       min-height: 80px;
       cursor: pointer;
       transition: all 0.5s;
-      &:hover{
+      &:hover {
         background-color: rgba(192, 224, 224, 0.335);
         box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
       }
