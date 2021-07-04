@@ -27,6 +27,7 @@ export class PokerRoomComponent implements OnInit {
     {} as AngularFirestoreDocument<Poker>;
   displayPoints = false;
   users: User[] = [];
+  defaultUser: User[] = [];
   allowedPoints: number[] = [0, 1, 2, 3, 5, 8, 13];
   userName = '';
   hasUserDetails = false;
@@ -37,7 +38,21 @@ export class PokerRoomComponent implements OnInit {
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef,
     private pokerService: PokerService
-  ) {}
+  ) {
+    this.defaultUser = [
+      { name: 'Rahul Pandey', hasVoted: false, point: 5 },
+      { name: 'Shahista InamDar', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      { name: 'Rahul', hasVoted: false, point: 5 },
+      
+    ];
+  }
 
   ngOnInit(): void {
     const user = localStorage.getItem('userName');
@@ -80,7 +95,7 @@ export class PokerRoomComponent implements OnInit {
     if (user) {
       user.point = points;
       user.hasVoted = true;
-      
+
       this.pokerService.updateUser(user);
     }
   }

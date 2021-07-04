@@ -13,6 +13,15 @@ import { environment } from '../environments/environment';
 import { PokerComponent } from './poker/poker.component';
 import { PokerRoomComponent } from './poker-room/poker-room.component';
 import { PokerService } from './services/poker.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+import {MatMenuModule} from '@angular/material/menu'
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +35,14 @@ import { PokerService } from './services/poker.service';
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatMenuModule,
+    MatBottomSheetModule
   ],
   providers: [PokerService],
   bootstrap: [AppComponent]
