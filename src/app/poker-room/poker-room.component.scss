@@ -170,6 +170,17 @@
 //   }
 // }
 
+.user-details-div {
+  top: 25%;
+  position: relative;
+  padding: 10% 25%;
+  background-color: beige;
+  box-shadow: 3px 6px 7px 3px rgb(75, 70, 70);
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
 .room-options-btn {
   position: fixed;
   right: 2%;
@@ -213,7 +224,7 @@
     box-shadow: 3px 6px 7px 3px #ccc;
     padding: 2%;
     justify-content: center;
-    .show-votes-btn{
+    .show-votes-btn {
       position: fixed;
       left: 3%;
       top: 50%;
@@ -224,7 +235,7 @@
       display: flex;
       flex-direction: column;
       margin: 0.5%;
-      background-color: rgba(174, 156, 233, 0.397);
+
       max-height: 50%;
       align-self: center;
       .voter-name {
@@ -258,10 +269,11 @@
       justify-content: center;
       min-height: 80px;
       cursor: pointer;
+      box-shadow: 3px 6px 7px 3px #ccc;
       transition: all 0.5s;
       &:hover {
         background-color: rgba(192, 224, 224, 0.335);
-        box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
+        box-shadow: 3px 6px 7px 3px rgb(97, 91, 91);
       }
       .point-value {
         align-self: center;
@@ -269,4 +281,14 @@
       }
     }
   }
+}
+.voter-card-green {
+  background-color: rgba(156, 233, 160, 0.397);
+}
+.voter-card-red {
+  background-color: rgba(233, 174, 156, 0.397);
+}
+.point-cards-selected {
+  background-color: rgba(118, 139, 139, 0.335);
+  box-shadow: 3px 6px 7px 3px rgb(75, 70, 70) !important;
 }

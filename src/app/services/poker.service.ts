@@ -5,11 +5,13 @@ import {
   DocumentSnapshot,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Poker, User } from '../interafces/poker';
+import { Poker, User } from '../interfaces/poker';
 @Injectable({
   providedIn: 'root',
 })
 export class PokerService {
+  roomKey = 'Loading Room Key';
+  isManager = false;
   private usersData: any;
   private sessionDocument: AngularFirestoreDocument<Poker> =
     {} as AngularFirestoreDocument<Poker>;
@@ -28,8 +30,9 @@ export class PokerService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  joinRoom(sessionId: string): Observable<boolean> {
-    const documentId = 'poker/' + sessionId;
+  joinRoom(roomKey: string): Observable<boolean> {
+    this.roomKey = roomKey;
+    const documentId = 'poker/' + roomKey;
     return new Observable((observer) => {
       this.sessionDocument = this.firestore.doc<Poker>(documentId);
 
@@ -64,6 +67,7 @@ export class PokerService {
               name: doc.name,
               hasVoted: doc.hasVoted,
               point: doc.point,
+              isManager: doc.isManager,
             });
           });
           this.roomState.users = userArray;
@@ -74,6 +78,7 @@ export class PokerService {
 
   createSession(pokerRoom: Poker): Observable<any> {
     return new Observable((observer) => {
+      this.isManager = true;
       this.firestore
         .collection('poker')
         .add(pokerRoom)
@@ -81,10 +86,12 @@ export class PokerService {
           this.sessionDocument = this.firestore.doc<Poker>(
             'poker/' + document.id
           );
+          this.roomKey = document.id;
           const user: User = {
             name: 'default',
             hasVoted: false,
             point: 0,
+            isManager: false,
           };
           this.sessionDocument
             .collection('users')

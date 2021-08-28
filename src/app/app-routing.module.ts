@@ -7,8 +7,8 @@ import { PokerComponent } from './poker/poker.component';
 const routes: Routes = [
   { path: 'format', component: FormatJsonComponent },
   { path: 'notes', component: NotesComponent },
-  { path: 'poker', component: PokerRoomComponent },
-  { path: '', component: PokerRoomComponent },
+  { path: 'poker', component: PokerComponent },
+  { path: '', component: PokerComponent },
 ];
 
 @NgModule({
