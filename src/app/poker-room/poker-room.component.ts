@@ -10,9 +10,13 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
-import { error } from 'selenium-webdriver';
-import { Poker, User } from '../interafces/poker';
+import { Poker, User } from '../interfaces/poker';
 import { PokerService } from '../services/poker.service';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { RoomDataComponent } from './room-data/room-data.component';
 @Component({
   selector: 'app-poker-room',
   templateUrl: './poker-room.component.html',
@@ -21,35 +25,37 @@ import { PokerService } from '../services/poker.service';
 export class PokerRoomComponent implements OnInit {
   @Input() sessionId?: string = '';
 
-  @ViewChild('name', { static: true }) userNameField: any;
-
   sessionDocument: AngularFirestoreDocument<Poker> =
     {} as AngularFirestoreDocument<Poker>;
   displayPoints = false;
   users: User[] = [];
+  defaultUser: User[] = [];
   allowedPoints: number[] = [0, 1, 2, 3, 5, 8, 13];
   userName = '';
+  isManager = false;
   hasUserDetails = false;
   selectedPoint: number = -1;
   storyText = '';
   timer: any;
+  tipDelay = 1000;
   constructor(
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef,
-    private pokerService: PokerService
+    private pokerService: PokerService,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
+  showRoomData() {
+    const bottomSheetRef = this._bottomSheet.open(RoomDataComponent, {
+      ariaLabel: 'Room Info',
+    });
+  }
+
   ngOnInit(): void {
-    const user = localStorage.getItem('userName');
-    if (user && user.length > 0) {
-      this.userName = user;
-      this.userNameField.nativeElement.value = this.userName;
+    const userName = localStorage.getItem('userName');
+    if (userName && userName.length > 0) {
+      this.userName = userName;
       this.hasUserDetails = true;
-      const point = this.users.find((element) => element.name === user)?.point;
-      if (point) {
-        this.selectedPoint = point;
-        this.selectPoint(this.selectedPoint);
-      }
     }
     try {
       this.pokerService.pokerRoom.subscribe(
@@ -58,6 +64,15 @@ export class PokerRoomComponent implements OnInit {
             this.storyText = data.story;
             this.users = data.users;
             this.displayPoints = data.showVotes;
+            const user = this.users.find(
+              (element) => element.name === this.userName
+            );
+            if (user) {
+              this.selectedPoint = user.point;
+              this.isManager = user.isManager;
+              this.pokerService.isManager = this.isManager;
+              this.cd.detectChanges();
+            }
             this.cd.detectChanges();
           } else {
             alert('Room Closed');
@@ -80,7 +95,13 @@ export class PokerRoomComponent implements OnInit {
     if (user) {
       user.point = points;
       user.hasVoted = true;
-      
+      this.pokerService.updateUser(user);
+    }
+  }
+  makeManager(name: string) {
+    const user = this.users.find((x) => x.name === name);
+    if (user) {
+      user.isManager = true;
       this.pokerService.updateUser(user);
     }
   }
@@ -95,11 +116,17 @@ export class PokerRoomComponent implements OnInit {
       return;
     }
 
-    const newUser: User = { name, hasVoted: false, point: 0 };
+    const newUser: User = {
+      name,
+      hasVoted: false,
+      point: 0,
+      isManager: this.pokerService.isManager,
+    };
     this.users.push(newUser);
     this.pokerService.updateUser(newUser);
     this.userName = name;
     this.hasUserDetails = true;
+    this.isManager = this.pokerService.isManager;
     localStorage.setItem('userName', this.userName);
   }
   showPoints() {

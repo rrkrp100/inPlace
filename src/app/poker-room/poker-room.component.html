@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="heading">
     <h1>Planning Tool (key: {{ sessionId }} )</h1>
     <button class="formatbtn exit" (click)="exitToMainPage()">Exit</button>
@@ -62,5 +62,95 @@
         <p class="name">{{ point }}</p>
       </button>
     </div>
+  </div>
+</div> -->
+<button
+  mat-fab
+  class="room-options-btn"
+  matTooltip="Display Room Info"
+  (click)="showRoomData()"
+>
+  <mat-icon>info</mat-icon>
+</button>
+<div *ngIf="!hasUserDetails" class="user-details-div">
+  <mat-form-field appearance="fill">
+    <mat-label>Enter Your Name to Proceed</mat-label>
+    <input matInput placeholder="Enter Your name" #name />
+  </mat-form-field>
+  <button mat-raised-button (click)="addUser(name.value)">Submit</button>
+</div>
+<div class="poker-room" *ngIf="hasUserDetails">
+  <div class="story-section">
+    <mat-form-field class="story-input">
+      <mat-label>Story:</mat-label>
+      <textarea
+        [readonly]="!isManager"
+        [disabled]="!isManager"
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5"
+        [value]="storyText"
+        #story
+        (change)="updateStory(story.value)"
+        (keypress)="updateStory(story.value)"
+      ></textarea>
+    </mat-form-field>
+    <button
+      [disabled]="!isManager"
+      mat-raised-button
+      class="next-story-btn"
+      (click)="nextStory()"
+    >
+      Next Story
+    </button>
+  </div>
+  <div class="voters-section">
+    <button
+      mat-raised-button
+      class="show-votes-btn"
+      [disabled]="!isManager"
+      (click)="showPoints()"
+    >
+      Show Votes
+    </button>
+    <mat-card
+      [ngClass]="
+        user.hasVoted
+          ? 'voter-cards voter-card-green'
+          : 'voter-cards voter-card-red'
+      "
+      *ngFor="let user of users"
+    >
+      <mat-card-title class="voter-name">{{ user.name }}</mat-card-title>
+      <mat-card-content class="voter-points">{{
+        displayPoints ? user.point : "*"
+      }}</mat-card-content>
+      <mat-card-actions class="voter-card-actions">
+        <button
+          [disabled]="!isManager"
+          mat-raised-button
+          (click)="makeManager(user.name)"
+        >
+          Make Manager
+        </button>
+        <button disabled mat-raised-button color="warn">Remove</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="points-section">
+    <mat-card
+      *ngFor="let point of allowedPoints"
+      matTooltip="Click To Vote"
+      [matTooltipShowDelay]="tipDelay"
+      [ngClass]="
+        point == selectedPoint
+          ? 'point-cards point-cards-selected'
+          : 'point-cards'
+      "
+      (click)="selectPoint(point)"
+    >
+      <mat-card-content class="point-value">{{ point }}</mat-card-content>
+    </mat-card>
   </div>
 </div>

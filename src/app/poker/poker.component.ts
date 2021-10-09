@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Poker, User } from '../interafces/poker';
+import { Poker, User } from '../interfaces/poker';
 import { PokerService } from '../services/poker.service';
 
 @Component({

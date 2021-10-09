@@ -1,0 +1,11 @@
+<div class="sheet">
+  <h1>Room Key: {{ roomKey }}</h1>
+  <button
+    mat-raised-button
+    [disabled]="!isManager"
+    color="warn"
+    (click)="deleteRoom()"
+  >
+    Delete Room
+  </button>
+</div>
