@@ -2,7 +2,7 @@
   top: 25%;
   position: absolute;
   padding: 10% 15%;
-  background-color: beige;
+  background-color: rgba(170, 185, 190, 0.082);
   box-shadow: 3px 6px 7px 3px rgb(75, 70, 70);
   display:flex;
   flex-direction: column;
@@ -12,6 +12,9 @@
   width: 75%;
   max-height: 300px;
   box-sizing: border-box;
+  .checkbox{
+    margin-bottom: 16px;
+  }
 }
 .room-options-btn {
   position: fixed;
@@ -63,12 +66,15 @@
       background-color: rgba(135, 222, 142, 0.349);
       box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
     }
+    .voter-div{
+      display: flex;
+    }
     .voter-cards {
       display: flex;
       flex-direction: column;
       margin: 0.5%;
 
-      max-height: 50%;
+      max-height: 100%;
       align-self: center;
       .voter-name {
         flex: 10%;
@@ -82,6 +88,7 @@
         margin-bottom: 20%;
       }
       .voter-card-actions {
+        display: flex;
         flex: 10%;
         align-self: center;
       }

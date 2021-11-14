@@ -24,6 +24,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { RoomDataComponent } from './poker-room/room-data/room-data.component';
 import {MatIconModule} from '@angular/material/icon'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatChipsModule} from '@angular/material/chips'; 
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatMenuModule,
     MatBottomSheetModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatChipsModule
   ],
   providers: [PokerService],
   bootstrap: [AppComponent]

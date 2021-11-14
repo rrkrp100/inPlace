@@ -9,3 +9,9 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.bottomSheet{
+    width: 750px;
+    .mat-bottom-sheet-container-large{
+        min-width: 700px;
+    }
+  }

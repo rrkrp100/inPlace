@@ -38,6 +38,7 @@ export class PokerRoomComponent implements OnInit {
   storyText = '';
   timer: any;
   tipDelay = 1000;
+  checked = false;
   constructor(
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef,
@@ -48,6 +49,7 @@ export class PokerRoomComponent implements OnInit {
   showRoomData() {
     const bottomSheetRef = this._bottomSheet.open(RoomDataComponent, {
       ariaLabel: 'Room Info',
+      panelClass:'bottomSheet'
     });
   }
 
@@ -69,7 +71,7 @@ export class PokerRoomComponent implements OnInit {
             );
             if (user) {
               this.selectedPoint = user.point;
-              this.isManager = user.isManager;
+              this.isManager = this.users.length === 1 ? true : user.isManager;
               this.pokerService.isManager = this.isManager;
               this.cd.detectChanges();
             }
@@ -121,6 +123,7 @@ export class PokerRoomComponent implements OnInit {
       hasVoted: false,
       point: 0,
       isManager: this.pokerService.isManager,
+      willNotVote: this.checked,
     };
     this.users.push(newUser);
     this.pokerService.updateUser(newUser);
@@ -190,5 +193,17 @@ export class PokerRoomComponent implements OnInit {
       };
       this.pokerService.updateRoom(newPoker);
     }, 1000);
+  }
+
+  getCardClasses(user: User): string {
+    var classes = '';
+    if (user.willNotVote) {
+      classes = 'observer-card';
+    } else {
+      classes = user.hasVoted
+        ? 'voter-cards voter-card-green'
+        : 'voter-cards voter-card-red';
+    }
+    return classes;
   }
 }

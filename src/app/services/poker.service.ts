@@ -68,6 +68,7 @@ export class PokerService {
               hasVoted: doc.hasVoted,
               point: doc.point,
               isManager: doc.isManager,
+              willNotVote: doc.willNotVote
             });
           });
           this.roomState.users = userArray;
@@ -110,10 +111,14 @@ export class PokerService {
   }
   deleteDocAndExit() {
     this.sessionDocument.delete().then(() => {
-      localStorage.removeItem('pokerKey');
-      localStorage.removeItem('userName');
-      location.reload();
+      this.exitRooom();
     });
+  }
+
+  exitRooom() {
+    localStorage.removeItem('pokerKey');
+    localStorage.removeItem('userName');
+    location.reload();
   }
 
   updateUser(user: User) {

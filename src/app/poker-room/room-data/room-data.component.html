@@ -1,11 +1,28 @@
-<div class="sheet">
-  <h1>Room Key: {{ roomKey }}</h1>
-  <button
-    mat-raised-button
-    [disabled]="!isManager"
-    color="warn"
-    (click)="deleteRoom()"
-  >
-    Delete Room
-  </button>
+
+<div>
+  <div class="sheet">
+    <h1>Room Key: {{ roomKey }}</h1>
+    <button *ngIf="isManager"
+      mat-raised-button
+      color="warn"
+      (click)="deleteRoom()"
+    >
+      Delete Room
+    </button>
+    <button *ngIf="!isManager"
+      mat-raised-button
+      color="warn"
+      (click)="exitRooom()"
+    >
+      Exit Room
+    </button>
+  </div>
+  <div class="observers">
+    <div>Observers:</div>
+    <mat-chip-list  aria-label="list of observers">
+      <mat-chip *ngFor="let user of users" >
+        {{user.name}}
+      </mat-chip>
+    </mat-chip-list>    
+  </div>
 </div>

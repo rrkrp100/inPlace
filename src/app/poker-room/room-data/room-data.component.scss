@@ -1,11 +1,20 @@
 .sheet {
   display: flex;
-  h1 {
+  h3 {
+    flex:3;
     align-self: center;
     margin-right: 5%;
   }
   button {
-    align-self: center;
-    left: 8%;
+  display: flex;
+    flex:2;
+    align-self:flex-end;
+    max-width: 100px;
+    left: 18%;
+    display: flex;
+    align-self: baseline;
   }
+}
+.observers{
+  width: 50%;
 }

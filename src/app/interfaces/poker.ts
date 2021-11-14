@@ -9,4 +9,5 @@ export interface User {
   hasVoted: boolean;
   point: number;
   isManager: boolean;
+  willNotVote?: boolean;
 }
