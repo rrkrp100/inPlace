@@ -11,8 +11,10 @@
     <mat-label>Enter Your Name to Proceed</mat-label>
     <input matInput placeholder="Enter Your name" #name />
   </mat-form-field>
-    <mat-checkbox class="checkbox" color='primary' [(ngModel)]="checked">I will not vote</mat-checkbox>
-    <button mat-raised-button (click)="addUser(name.value)">Submit</button>
+  <mat-checkbox class="checkbox" color="primary" [(ngModel)]="checked"
+    >I will not vote</mat-checkbox
+  >
+  <button mat-raised-button (click)="addUser(name.value)">Submit</button>
 </div>
 <div class="poker-room" *ngIf="hasUserDetails">
   <div class="story-section">
@@ -51,29 +53,30 @@
     </button>
     <div class="voter-div" *ngFor="let user of users">
       <mat-card
-      [ngClass]="
-        user.hasVoted
-          ? 'voter-cards voter-card-green'
-          : 'voter-cards voter-card-red'
-      "
-      *ngIf="!user.willNotVote"      
-    >
-      <mat-card-title class="voter-name">{{ user.name }}</mat-card-title>
-      <mat-card-content class="voter-points">{{
-        displayPoints ? user.point : "*"
-      }}</mat-card-content>
-      <mat-card-actions class="voter-card-actions">
-        <button
-          [disabled]="!isManager"
-          mat-raised-button
-          (click)="makeManager(user.name)"
-        >
-          Make Manager
-        </button>
-        <button disabled mat-raised-button color="warn">Remove</button>
-      </mat-card-actions>
-    </mat-card>
+        [ngClass]="
+          user.hasVoted
+            ? 'voter-cards voter-card-green'
+            : 'voter-cards voter-card-red'
+        "
+        *ngIf="!user.willNotVote"
+      >
+        <mat-card-title class="voter-name">{{ user.name }}</mat-card-title>
+        <mat-card-content class="voter-points">{{
+          displayPoints ? user.point : "*"
+        }}</mat-card-content>
+        <mat-card-actions class="voter-card-actions">
+          <button
+            [disabled]="!isManager || user.isManager"
+            mat-raised-button
+            (click)="makeManager(user.name)"
+          >
+            Make Manager
+          </button>
+          <button [disabled]="!isManager || user.isManager" mat-raised-button color="warn" (click)="removeUser(user.name)">Remove</button>
+        </mat-card-actions>
+      </mat-card>
     </div>
+    <div *ngIf="showWaitingMsg" class="waiting-txt">Waiting for others to join..</div>
   </div>
   <div class="points-section">
     <mat-card

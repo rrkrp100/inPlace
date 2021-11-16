@@ -39,6 +39,7 @@ export class PokerRoomComponent implements OnInit {
   timer: any;
   tipDelay = 1000;
   checked = false;
+  showWaitingMsg=false;
   constructor(
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef,
@@ -69,6 +70,12 @@ export class PokerRoomComponent implements OnInit {
             const user = this.users.find(
               (element) => element.name === this.userName
             );
+            if(this.users.length===(this.users.filter(x=>x.willNotVote).length)){
+              this.showWaitingMsg=true;
+            }
+            else{
+              this.showWaitingMsg=false;
+            }
             if (user) {
               this.selectedPoint = user.point;
               this.isManager = this.users.length === 1 ? true : user.isManager;
@@ -205,5 +212,9 @@ export class PokerRoomComponent implements OnInit {
         : 'voter-cards voter-card-red';
     }
     return classes;
+  }
+
+  removeUser(userName:string){
+    this.pokerService.removeUser(userName);
   }
 }

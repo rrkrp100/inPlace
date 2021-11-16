@@ -10,6 +10,8 @@
       <button type="button" (click)="createSession()"><span>Create a new Room</span></button>
     </div>
   </div>
+  
+
   <div class="room" *ngIf="isRoomReady">
     <app-poker-room [sessionId]="sessionId" ></app-poker-room>
   </div>

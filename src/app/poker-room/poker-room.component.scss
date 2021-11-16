@@ -68,6 +68,7 @@
     }
     .voter-div{
       display: flex;
+      margin: 16px;
     }
     .voter-cards {
       display: flex;
@@ -130,4 +131,8 @@
 .point-cards-selected {
   background-color: rgba(118, 139, 139, 0.335);
   box-shadow: 3px 6px 7px 3px rgb(75, 70, 70) !important;
+}
+.waiting-txt{
+  font-size: 36px;
+  padding: 16px;
 }

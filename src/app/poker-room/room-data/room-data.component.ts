@@ -30,4 +30,14 @@ export class RoomDataComponent implements OnInit {
   exitRooom(){
     this.pokerService.exitRooom()
   }
+  makeManager(name: string) {
+    const user = this.users.find((x) => x.name === name);
+    if (user) {
+      user.isManager = true;
+      this.pokerService.updateUser(user);
+    }
+  }
+  removeUser(usserName:string){
+    this.pokerService.removeUser(usserName);
+  }
 }

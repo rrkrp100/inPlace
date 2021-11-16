@@ -68,7 +68,7 @@ export class PokerService {
               hasVoted: doc.hasVoted,
               point: doc.point,
               isManager: doc.isManager,
-              willNotVote: doc.willNotVote
+              willNotVote: doc.willNotVote,
             });
           });
           this.roomState.users = userArray;
@@ -116,9 +116,15 @@ export class PokerService {
   }
 
   exitRooom() {
+    var user = localStorage.getItem('userName') as string;
+    this.removeUser(user);
     localStorage.removeItem('pokerKey');
     localStorage.removeItem('userName');
     location.reload();
+  }
+
+  removeUser(userName:string){
+    this.sessionDocument.collection('users').doc<User>(userName).delete()
   }
 
   updateUser(user: User) {

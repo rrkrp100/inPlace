@@ -5,6 +5,7 @@
     <button *ngIf="isManager"
       mat-raised-button
       color="warn"
+      matTooltip="Delete the Room and exit"
       (click)="deleteRoom()"
     >
       Delete Room
@@ -17,11 +18,25 @@
       Exit Room
     </button>
   </div>
-  <div class="observers">
+  <div class="observers" *ngIf="users.length>0">
     <div>Observers:</div>
     <mat-chip-list  aria-label="list of observers">
       <mat-chip *ngFor="let user of users" >
         {{user.name}}
+        <button mat-icon-button *ngIf="isManager"  [matMenuTriggerFor]="menu" aria-label="More options Menu">
+          <mat-icon class="icon-class">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" >
+          <button mat-menu-item [disabled]="user.isManager" (click)="makeManager(user.name)">
+            <mat-icon class="icon-class" >gavel</mat-icon>
+            <span>Make Manager</span>
+          </button>
+          <button mat-menu-item  [disabled]="user.isManager" (click)="removeUser(user.name)">
+            <mat-icon class="icon-class" >delete_forever</mat-icon>
+            <span>Remove User</span>
+          </button>
+        </mat-menu>
+        
       </mat-chip>
     </mat-chip-list>    
   </div>
