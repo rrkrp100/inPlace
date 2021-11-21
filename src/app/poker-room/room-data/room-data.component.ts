@@ -3,7 +3,7 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { User } from 'src/app/interfaces/poker';
 import { PokerService } from 'src/app/services/poker.service';
 import { PokerRoomComponent } from '../poker-room.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { SnackComponent } from './snack/snack.component';
 @Component({
   selector: 'app-room-data',
@@ -14,6 +14,8 @@ export class RoomDataComponent implements OnInit {
   roomKey: string = 'Loading Room Details...';
   isManager = false;
   users: User[] = [];
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<PokerRoomComponent>,
     private pokerService: PokerService,
@@ -46,7 +48,9 @@ export class RoomDataComponent implements OnInit {
   openSnackBar() {
     this._snackBar.openFromComponent(SnackComponent, {
       duration: 1000,
-      panelClass:'toast-class'
+      panelClass:'toast-class',
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
     });
   }
 }

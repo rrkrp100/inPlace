@@ -30,6 +30,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SnackComponent } from './poker-room/room-data/snack/snack.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { SnackComponent } from './poker-room/room-data/snack/snack.component';
     MatChipsModule,
     MatProgressSpinnerModule,
     ClipboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [PokerService],
   bootstrap: [AppComponent]

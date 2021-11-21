@@ -11,7 +11,7 @@ export class PokerComponent implements OnInit {
   sessionId: string = '';
   isRoomReady = false;
   users: User[] = [];
-
+  loading=false;
   constructor(
     private pokerStore: PokerService,
     private cd: ChangeDetectorRef
@@ -22,10 +22,12 @@ export class PokerComponent implements OnInit {
     if (pokerKey && pokerKey.length > 0) {
       this.joinRoom(pokerKey);
     }
+    this.loading=false;
   }
 
   joinRoom(key: string) {
     if (key.trim().length > 0) {
+      this.loading=true;
       this.sessionId = key.trim();
       this.pokerStore.joinRoom(this.sessionId).subscribe(
         (joined) => {
@@ -37,6 +39,7 @@ export class PokerComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          alert(error);
         }
       );
     }
@@ -44,6 +47,7 @@ export class PokerComponent implements OnInit {
 
   createSession() {
     const newPoker: Poker = { story: '', users: [], showVotes: false };
+    this.loading=true;
     this.pokerStore.createSession(newPoker).subscribe((id) => {
       this.joinRoom(id);
     });

@@ -3,14 +3,16 @@
     <div class="have-key">
       Already have a key? Join the room:
       <input type="text" #keyInput />
-      <button type="submit" (click)="joinRoom(keyInput.value)">Join</button>
+      <button type="submit" [disabled]="loading" (click)="joinRoom(keyInput.value)">Join</button>
     </div>
     <div class="or"><p>---Or---</p></div>
     <div class="new-room">
-      <button type="button" (click)="createSession()"><span>Create a new Room</span></button>
+      <button [disabled]="loading" type="button" (click)="createSession()"><span>Create a new Room</span></button>
     </div>
+    <mat-progress-bar *ngIf="loading" mode="query"></mat-progress-bar>
   </div>
   
+
 
   <div class="room" *ngIf="isRoomReady">
     <app-poker-room [sessionId]="sessionId" ></app-poker-room>
