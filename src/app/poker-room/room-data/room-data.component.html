@@ -2,11 +2,20 @@
 <div>
   <div class="sheet">
     <h1>Room Key: {{ roomKey }}</h1>
+    <button 
+    class="copy-key"
+      mat-raised-button
+      (click)="openSnackBar()"
+      [cdkCopyToClipboard]="roomKey"
+    >
+      Copy Key
+    </button>
     <button *ngIf="isManager"
       mat-raised-button
       color="warn"
       matTooltip="Delete the Room and exit"
       (click)="deleteRoom()"
+      class="delete"
     >
       Delete Room
     </button>
@@ -14,9 +23,11 @@
       mat-raised-button
       color="warn"
       (click)="exitRooom()"
+      class="delete"
     >
       Exit Room
     </button>
+    
   </div>
   <div class="observers" *ngIf="users.length>0">
     <div>Observers:</div>

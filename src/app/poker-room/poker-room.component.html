@@ -1,10 +1,11 @@
 <button
-  mat-fab
+  mat-raised-button 
   class="room-options-btn"
   matTooltip="Display Room Info"
   (click)="showRoomData()"
->
-  <mat-icon>info</mat-icon>
+>Room info
+<button mat-mini-fab class="info-icon"><mat-icon>info</mat-icon></button>
+  
 </button>
 <div *ngIf="!hasUserDetails" class="user-details-div">
   <mat-form-field appearance="fill">
@@ -77,6 +78,15 @@
       </mat-card>
     </div>
     <div *ngIf="showWaitingMsg" class="waiting-txt">Waiting for others to join..</div>
+    <mat-card
+    *ngIf="displayPoints"
+      matTooltip="Avergae of all valid Votes"
+      [matTooltipShowDelay]="tipDelay"
+      class="point-cards floating"
+    >
+      <mat-card-subtitle >Avg Points</mat-card-subtitle>
+      <mat-card-content class="avg-point">{{avgVotes}}</mat-card-content>
+    </mat-card>
   </div>
   <div class="points-section">
     <mat-card

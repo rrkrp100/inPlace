@@ -4,7 +4,7 @@
   padding: 10% 15%;
   background-color: rgba(170, 185, 190, 0.082);
   box-shadow: 3px 6px 7px 3px rgb(75, 70, 70);
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -12,16 +12,23 @@
   width: 75%;
   max-height: 300px;
   box-sizing: border-box;
-  .checkbox{
+  .checkbox {
     margin-bottom: 16px;
   }
 }
 .room-options-btn {
+  width: auto;
+  padding: 4px 8px;
+  text-align: center;
   position: fixed;
   right: 2%;
   bottom: 2%;
-  background-color: rgba(63, 63, 100, 0.315);
+  background-color: rgba(183, 183, 190, 0.315);
   box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
+  .info-icon{
+    background-color: rgba(63, 63, 100, 0.315);
+
+  }
 }
 .poker-room {
   display: flex;
@@ -66,7 +73,21 @@
       background-color: rgba(135, 222, 142, 0.349);
       box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
     }
-    .voter-div{
+    .floating {
+      position: fixed;
+      right: 3%;
+      top: 40%;
+      background-color: rgba(135, 222, 142, 0.349);
+      box-shadow: 3px 6px 7px -3px rgb(97, 91, 91);
+      padding:  16px 16px 32px 16px;
+      .avg-point {
+        text-align: center;
+        font-size: 64px;
+      }
+      z-index: 1;
+      transition: all 0.5s;
+    }
+    .voter-div {
       display: flex;
       margin: 16px;
     }
@@ -132,7 +153,7 @@
   background-color: rgba(118, 139, 139, 0.335);
   box-shadow: 3px 6px 7px 3px rgb(75, 70, 70) !important;
 }
-.waiting-txt{
+.waiting-txt {
   font-size: 36px;
   padding: 16px;
 }

@@ -1,23 +1,35 @@
 .sheet {
   display: flex;
   h3 {
-    flex:3;
+    flex: 3;
     align-self: center;
     margin-right: 5%;
   }
   button {
-  display: flex;
-    flex:2;
-    align-self:flex-end;
+    display: flex;
+    flex: 2;
+    align-self: flex-end;
     max-width: 100px;
     left: 18%;
     display: flex;
     align-self: baseline;
   }
 }
-.observers{
+.observers {
   width: 50%;
 }
-.icon-class{
+.icon-class {
   font-size: 18px;
+}
+
+.copy-key {
+  margin-left: 32px;
+  float: left;
+  position: inherit;
+  background-color: rgba(63, 63, 100, 0.315);
+}
+.delete {
+  margin-left: 32px;
+  float: left;
+  position: inherit;
 }

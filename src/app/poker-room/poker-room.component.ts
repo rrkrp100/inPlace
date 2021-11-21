@@ -39,7 +39,8 @@ export class PokerRoomComponent implements OnInit {
   timer: any;
   tipDelay = 1000;
   checked = false;
-  showWaitingMsg=false;
+  showWaitingMsg = false;
+  avgVotes = 0;
   constructor(
     private firestore: AngularFirestore,
     private cd: ChangeDetectorRef,
@@ -50,7 +51,7 @@ export class PokerRoomComponent implements OnInit {
   showRoomData() {
     const bottomSheetRef = this._bottomSheet.open(RoomDataComponent, {
       ariaLabel: 'Room Info',
-      panelClass:'bottomSheet'
+      panelClass: 'bottomSheet',
     });
   }
 
@@ -70,11 +71,13 @@ export class PokerRoomComponent implements OnInit {
             const user = this.users.find(
               (element) => element.name === this.userName
             );
-            if(this.users.length===(this.users.filter(x=>x.willNotVote).length)){
-              this.showWaitingMsg=true;
-            }
-            else{
-              this.showWaitingMsg=false;
+            if (
+              this.users.length ===
+              this.users.filter((x) => x.willNotVote).length
+            ) {
+              this.showWaitingMsg = true;
+            } else {
+              this.showWaitingMsg = false;
             }
             if (user) {
               this.selectedPoint = user.point;
@@ -140,6 +143,15 @@ export class PokerRoomComponent implements OnInit {
     localStorage.setItem('userName', this.userName);
   }
   showPoints() {
+    var sum = 0;
+    var voters = 0;
+    this.users.forEach((user) => {
+      if (user.hasVoted && user.point > 0) {
+        sum += user.point;
+        voters++;
+      }
+    });
+    this.avgVotes = sum > 0 ? (voters > 0 ? sum / voters : 0) : 0;
     this.displayPoints = true;
     const newPoker: Poker = {
       story: this.storyText,
@@ -214,7 +226,7 @@ export class PokerRoomComponent implements OnInit {
     return classes;
   }
 
-  removeUser(userName:string){
+  removeUser(userName: string) {
     this.pokerService.removeUser(userName);
   }
 }

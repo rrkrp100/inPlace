@@ -27,7 +27,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips'; 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { SnackComponent } from './poker-room/room-data/snack/snack.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     NotesComponent,
     PokerComponent,
     PokerRoomComponent,
-    RoomDataComponent
+    RoomDataComponent,
+    SnackComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatTooltipModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ClipboardModule,
+    MatSnackBarModule
   ],
   providers: [PokerService],
   bootstrap: [AppComponent]
