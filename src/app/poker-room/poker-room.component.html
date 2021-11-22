@@ -85,7 +85,7 @@
       class="point-cards floating"
     >
       <mat-card-subtitle >Avg Points</mat-card-subtitle>
-      <mat-card-content class="avg-point">{{avgVotes}}</mat-card-content>
+      <mat-card-content class="avg-point">{{avgVotes | number : '1.1-1'}}</mat-card-content>
     </mat-card>
   </div>
   <div class="points-section">
