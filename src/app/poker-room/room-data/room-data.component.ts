@@ -16,6 +16,7 @@ export class RoomDataComponent implements OnInit {
   users: User[] = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  roomUrl = ''
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<PokerRoomComponent>,
     private pokerService: PokerService,
@@ -28,6 +29,7 @@ export class RoomDataComponent implements OnInit {
     this.pokerService.pokerRoom.subscribe((room) => {
       this.users = room.users.filter((x) => x.willNotVote);
     });
+    this.roomUrl = window.location.href;
   }
   deleteRoom() {
     this.pokerService.deleteDocAndExit();

@@ -35,7 +35,7 @@
       ></textarea>
     </mat-form-field>
     <button
-      [disabled]="!isManager"
+      *ngIf="isManager"
       mat-raised-button
       class="next-story-btn"
       (click)="nextStory()"
@@ -47,7 +47,7 @@
     <button
       mat-raised-button
       class="show-votes-btn"
-      [disabled]="!isManager"
+      *ngIf="isManager"
       (click)="showPoints()"
     >
       Show Votes

@@ -30,7 +30,7 @@ export class PokerRoomComponent implements OnInit {
   displayPoints = false;
   users: User[] = [];
   defaultUser: User[] = [];
-  allowedPoints: number[] = [0, 1, 2, 3, 5, 8, 13];
+  allowedPoints: number[] = [0,.5, 1, 2, 3, 5, 8, 13];
   userName = '';
   isManager = false;
   hasUserDetails = false;
@@ -68,6 +68,9 @@ export class PokerRoomComponent implements OnInit {
             this.storyText = data.story;
             this.users = data.users;
             this.displayPoints = data.showVotes;
+            if(this.displayPoints){
+              this.showPoints()
+            }
             const user = this.users.find(
               (element) => element.name === this.userName
             );
@@ -152,13 +155,16 @@ export class PokerRoomComponent implements OnInit {
       }
     });
     this.avgVotes = sum > 0 ? (voters > 0 ? sum / voters : 0) : 0;
+
+    if(!this.displayPoints){
+      const newPoker: Poker = {
+        story: this.storyText,
+        users: this.users,
+        showVotes: true,
+      };
+      this.pokerService.updateRoom(newPoker);
+    }
     this.displayPoints = true;
-    const newPoker: Poker = {
-      story: this.storyText,
-      users: this.users,
-      showVotes: this.displayPoints,
-    };
-    this.pokerService.updateRoom(newPoker);
   }
   selectPoint(point: number) {
     if (this.displayPoints) {

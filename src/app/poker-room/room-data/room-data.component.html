@@ -6,9 +6,9 @@
     class="copy-key"
       mat-raised-button
       (click)="openSnackBar()"
-      [cdkCopyToClipboard]="roomKey"
+      [cdkCopyToClipboard]="roomUrl"
     >
-      Copy Key
+      Copy Url
     </button>
     <button *ngIf="isManager"
       mat-raised-button

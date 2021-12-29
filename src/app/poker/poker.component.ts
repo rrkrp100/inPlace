@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Poker, User } from '../interfaces/poker';
 import { PokerService } from '../services/poker.service';
 
@@ -14,11 +15,18 @@ export class PokerComponent implements OnInit {
   loading=false;
   constructor(
     private pokerStore: PokerService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    const pokerKey = localStorage.getItem('pokerKey');
+    var pokerKey = localStorage.getItem('pokerKey');
+    this.activatedRoute.queryParams.subscribe(params => {
+      pokerKey = params['rid'];  // Check url for room id 
+  });
+  if(!pokerKey){
+    pokerKey = localStorage.getItem('pokerKey');
+  }
     if (pokerKey && pokerKey.length > 0) {
       this.joinRoom(pokerKey);
     }
@@ -48,7 +56,7 @@ export class PokerComponent implements OnInit {
   createSession() {
     const newPoker: Poker = { story: '', users: [], showVotes: false };
     this.loading=true;
-    this.pokerStore.createSession(newPoker).subscribe((id) => {
+    this.pokerStore.createRoom(newPoker).subscribe((id) => {
       this.joinRoom(id);
     });
   }

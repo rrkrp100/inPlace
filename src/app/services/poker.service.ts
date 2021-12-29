@@ -4,6 +4,7 @@ import {
   AngularFirestoreDocument,
   DocumentSnapshot,
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Poker, User } from '../interfaces/poker';
 @Injectable({
@@ -28,7 +29,7 @@ export class PokerService {
     showVotes: false,
   });
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore, private _router: Router) {}
 
   joinRoom(roomKey: string): Observable<boolean> {
     this.roomKey = roomKey;
@@ -77,7 +78,7 @@ export class PokerService {
     });
   }
 
-  createSession(pokerRoom: Poker): Observable<any> {
+  createRoom(pokerRoom: Poker): Observable<any> {
     return new Observable((observer) => {
       this.isManager = true;
       this.firestore
@@ -88,6 +89,12 @@ export class PokerService {
             'poker/' + document.id
           );
           this.roomKey = document.id;
+          this._router.navigate([], {
+            queryParams: {
+              rid: this.roomKey
+            },
+            queryParamsHandling: 'merge',
+          });
           const user: User = {
             name: 'default',
             hasVoted: false,
@@ -120,11 +127,17 @@ export class PokerService {
     this.removeUser(user);
     localStorage.removeItem('pokerKey');
     localStorage.removeItem('userName');
-    location.reload();
+    this._router.navigate([], {
+      queryParams: {
+        'rid': null,
+      },
+      queryParamsHandling: 'merge'
+    }).then(()=>{location.reload();})
+    
   }
 
-  removeUser(userName:string){
-    this.sessionDocument.collection('users').doc<User>(userName).delete()
+  removeUser(userName: string) {
+    this.sessionDocument.collection('users').doc<User>(userName).delete();
   }
 
   updateUser(user: User) {
@@ -137,5 +150,9 @@ export class PokerService {
         .doc<User>(user.name)
         .update({ hasVoted: false, point: 0 });
     });
+  }
+
+  getRoomUrl(){
+    return this._router.url;
   }
 }
